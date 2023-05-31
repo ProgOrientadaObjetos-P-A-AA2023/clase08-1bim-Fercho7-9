@@ -17,6 +17,7 @@ import paquete3.LecturaSecuencialJugador;
  * @author reroes
  */
 public class Principal {
+
     public static void main(String[] args) {
         Scanner entrada = new Scanner(System.in);
         boolean bandera = true;
@@ -27,7 +28,7 @@ public class Principal {
                     "2) Listar Club",
                     "3) Ingrese Jugador",
                     "4) Listar Jugador",
-                    "5) Buscar Jugador");
+                    "5) Verificar Jugador");
             int opcion = entrada.nextInt();
             if (opcion == 1) {
                 agregarClubs();
@@ -46,24 +47,29 @@ public class Principal {
                     } else {
                         if (opcion == 4) {
                             verJugadores();
-                        }else{
-                            System.out.println("Opción incorrecta");
+                        } else {
+                            if (opcion == 5) {
+                                boolean verificarjugador = verificarJugador();
+                                if (verificarjugador) {
+                                    System.out.println("El Jugador existe");
+                                } else {
+                                    System.out.println("El jugador no existe");
+                                }
+                            } else {
+                                System.out.println("Opción incorrecta");
+                            }
                         }
-
-                    }
-                    if (opcion==5) {
 
                     }
 
                 }
 
-            }
-
-            entrada.nextLine();
-            System.out.println("Desea salir del proceso. Ingrese:  si");
-            String salida = entrada.nextLine();
-            if (salida.equals("si")) {
-                bandera = false;
+                entrada.nextLine();
+                System.out.println("Desea salir del proceso. Ingrese:  si");
+                String salida = entrada.nextLine();
+                if (salida.equals("si")) {
+                    bandera = false;
+                }
             }
         }
     }
@@ -115,10 +121,10 @@ public class Principal {
         LecturaSecuencialClub lectura
                 = new LecturaSecuencialClub(nombreArchivoClub);
         lectura.establecerRegistroBuscado(siglasEquipo);
-        Club c = lectura.obtenerRegistroBuscado();
+        Club c = lectura.obtenerRegistroBuscado(); // buscar club
 
         // print para presentar si existe el club. Informativo
-        if (c==null) {
+        if (c == null) {
             System.out.println("Debe seleccionar de forma correcta el club");
         }
 
@@ -144,16 +150,27 @@ public class Principal {
         System.out.println(lectura);
         lectura.cerrarArchivo();
     }
-    public static void buscarJugadorNombre(){
 
-        Scanner teclado = new Scanner(System.in);
-        String nombreArchivo = "data/jugadores.dat";
-        System.out.println("Ingrese el nombre del Jugador");
-        String nombre = teclado.nextLine();
+    public static boolean verificarJugador() {
+        boolean bandera = false;
+
+        Scanner entrada = new Scanner(System.in);
+
+        System.out.println("Ingrese el nombre del jugador");
+        String nombre = entrada.nextLine();
+
+        // proceso para saber si existe el club
+        String nombreArchivoClub = "data/jugadores.dat";
         LecturaSecuencialJugador lectura
-                = new LecturaSecuencialJugador(nombreArchivo);
-        lectura.establecerJugadores();
+                = new LecturaSecuencialJugador(nombreArchivoClub);
+        lectura.establecerVerficarJugador(nombre);
+        Jugador c = lectura.obtenerVerficarJugador(); // buscar club
 
-        lectura.cerrarArchivo();
+        // print para presentar si existe el club. Informativo
+        if (c != null) {
+            bandera = true;
+        }
+
+        return bandera;
     }
 }
