@@ -17,17 +17,17 @@ import paquete3.LecturaSecuencialJugador;
  * @author reroes
  */
 public class Principal {
-
     public static void main(String[] args) {
         Scanner entrada = new Scanner(System.in);
         boolean bandera = true;
         while (bandera) {
-            System.out.printf("%s\n%s\n%s\n%s\n%s\n",
+            System.out.printf("%s\n%s\n%s\n%s\n%s\n%s\n",
                     "Opciones",
                     "1) Ingrese Club",
                     "2) Listar Club",
                     "3) Ingrese Jugador",
-                    "4) Listar Jugador");
+                    "4) Listar Jugador",
+                    "5) Buscar Jugador");
             int opcion = entrada.nextInt();
             if (opcion == 1) {
                 agregarClubs();
@@ -49,6 +49,10 @@ public class Principal {
                         }else{
                             System.out.println("Opción incorrecta");
                         }
+
+                    }
+                    if (opcion==5) {
+
                     }
 
                 }
@@ -112,12 +116,12 @@ public class Principal {
                 = new LecturaSecuencialClub(nombreArchivoClub);
         lectura.establecerRegistroBuscado(siglasEquipo);
         Club c = lectura.obtenerRegistroBuscado();
-        
+
         // print para presentar si existe el club. Informativo
         if (c==null) {
             System.out.println("Debe seleccionar de forma correcta el club");
         }
-        
+
         if (c != null) {
             EscrituraSecuencialJugador archivo
                     = new EscrituraSecuencialJugador(nombreArchivo);
@@ -131,7 +135,7 @@ public class Principal {
         }
         return bandera;
     }
-    
+
     public static void verJugadores() {
         String nombreArchivo = "data/jugadores.dat";
         LecturaSecuencialJugador lectura
@@ -140,5 +144,16 @@ public class Principal {
         System.out.println(lectura);
         lectura.cerrarArchivo();
     }
+    public static void buscarJugadorNombre(){
 
+        Scanner teclado = new Scanner(System.in);
+        String nombreArchivo = "data/jugadores.dat";
+        System.out.println("Ingrese el nombre del Jugador");
+        String nombre = teclado.nextLine();
+        LecturaSecuencialJugador lectura
+                = new LecturaSecuencialJugador(nombreArchivo);
+        lectura.establecerJugadores();
+
+        lectura.cerrarArchivo();
+    }
 }
